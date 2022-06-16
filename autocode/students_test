@@ -108,9 +108,9 @@ func Test_Matrix(t *testing.T) {
 
 	t.Run("New", func(t *testing.T) {
 
-		//expectedMatrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
+		expectedMatrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
 
-		_, err := New("    1 2 3\n         1 2 3\n  1 2 3    ")
+		matrix, err := New("    1 2 3\n         1 2 3\n  1 2 3    ")
 
 		if err != nil {
 
@@ -121,9 +121,9 @@ func Test_Matrix(t *testing.T) {
 			}
 
 		} else {
-			// if !assert.Equal(matrix, expectedMatrix, "The two matrix should be the same.") {
-			// 	t.Errorf(errMatrixNotEquel, expectedMatrix, matrix)
-			// }
+			if !assert.Equal(matrix, expectedMatrix, "The two matrix should be the same.") {
+				t.Errorf(errMatrixNotEquel, expectedMatrix, matrix)
+			}
 		}
 
 	})
@@ -159,71 +159,71 @@ func Test_Matrix(t *testing.T) {
 		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
 		result := matrix.Set(1, 1, 10)
 
-		//expectedMatrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 10, 3, 1, 2, 3}}
+		expectedMatrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 10, 3, 1, 2, 3}}
 
 		expectedResult := true
 
 		if result != expectedResult {
 			t.Errorf("%s", errSet.Error())
 		} else {
-			// if !assert.Equal(matrix, expectedMatrix, "The two matrix should be the same.") {
-			// 	t.Errorf("The tow matrix are not equel: expected %v, got %v", expectedMatrix, matrix)
-			// }
+			if !assert.Equal(matrix, expectedMatrix, "The two matrix should be the same.") {
+				t.Errorf("The tow matrix are not equel: expected %v, got %v", expectedMatrix, matrix)
+			}
 		}
 
 	})
 
 }
 
-func BenchmarkTets_Matrix(b *testing.B) {
+// func BenchmarkTets_Matrix(b *testing.B) {
 
-	assert := assert.New(b)
+// 	assert := assert.New(b)
 
-	b.Run("BenchmarkTets_New()", func(*testing.B) {
+// 	b.Run("BenchmarkTets_New()", func(*testing.B) {
 
-		_, err := New("    1 2 3\n         1 2 3\n  1 2 3\n  8 250 8555555\n   0 0 0\n   125 896 8745658    ")
+// 		_, err := New("    1 2 3\n         1 2 3\n  1 2 3\n  8 250 8555555\n   0 0 0\n   125 896 8745658    ")
 
-		if err != nil {
-			b.Errorf(errMatrixCreate+" %s", err.Error())
-		}
+// 		if err != nil {
+// 			b.Errorf(errMatrixCreate+" %s", err.Error())
+// 		}
 
-	})
+// 	})
 
-	b.Run("BenchmarkTets_Rows()", func(*testing.B) {
+// 	b.Run("BenchmarkTets_Rows()", func(*testing.B) {
 
-		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
-		rows := matrix.Rows()
+// 		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
+// 		rows := matrix.Rows()
 
-		expectedRows := [][]int{{1, 2, 3}, {1, 2, 3}, {1, 2, 3}}
+// 		expectedRows := [][]int{{1, 2, 3}, {1, 2, 3}, {1, 2, 3}}
 
-		if !assert.Equal(rows, expectedRows, "The two arrays (rows of matrix) should be the same.") {
-			b.Errorf("The tow array (rows of matrix) are not equel: expected %v, got %v", expectedRows, rows)
-		}
+// 		if !assert.Equal(rows, expectedRows, "The two arrays (rows of matrix) should be the same.") {
+// 			b.Errorf("The tow array (rows of matrix) are not equel: expected %v, got %v", expectedRows, rows)
+// 		}
 
-	})
+// 	})
 
-	b.Run("BenchmarkTets_Cols()", func(*testing.B) {
+// 	b.Run("BenchmarkTets_Cols()", func(*testing.B) {
 
-		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
-		cols := matrix.Cols()
+// 		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
+// 		cols := matrix.Cols()
 
-		expectedCols := [][]int{{1, 1, 1}, {2, 2, 2}, {3, 3, 3}}
+// 		expectedCols := [][]int{{1, 1, 1}, {2, 2, 2}, {3, 3, 3}}
 
-		if !assert.Equal(cols, expectedCols, "The two array (cols of matrix) should be the same.") {
-			b.Errorf("The tow array (cols of matrix) are not equel: expected %v, got %v", expectedCols, cols)
-		}
+// 		if !assert.Equal(cols, expectedCols, "The two array (cols of matrix) should be the same.") {
+// 			b.Errorf("The tow array (cols of matrix) are not equel: expected %v, got %v", expectedCols, cols)
+// 		}
 
-	})
+// 	})
 
-	b.Run("BenchmarkTets_Set()", func(*testing.B) {
+// 	b.Run("BenchmarkTets_Set()", func(*testing.B) {
 
-		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
-		result := matrix.Set(1, 1, 10)
+// 		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
+// 		result := matrix.Set(1, 1, 10)
 
-		if !result {
-			b.Errorf("%s", errSet.Error())
-		}
+// 		if !result {
+// 			b.Errorf("%s", errSet.Error())
+// 		}
 
-	})
+// 	})
 
-}
+// }
