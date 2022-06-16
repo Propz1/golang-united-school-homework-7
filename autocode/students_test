@@ -3,6 +3,7 @@ package coverage
 import (
 	"errors"
 	"os"
+	"reflect"
 	"testing"
 	"time"
 
@@ -14,13 +15,13 @@ var (
 	length                = 2
 	errMatrixCreate       = "matrix was not created: "
 	errMatrixNotEquel     = "The two matrix not equal: expected %v, got %v"
-	errRowsNotEquelLength = "Rows need to be the same length"
+	errRowsNotEquelLength = errors.New("Rows need to be the same length")
 	errSet                = errors.New("disturbed conditions of Set(row, col, value int) method: (row < 0 || m.rows <= row || col < 0 || m.cols <= col)")
 )
 
-func RowsNotEquelLength(err error) bool {
-	return err.Error() == errRowsNotEquelLength
-}
+// func RowsNotEquelLength(err error) bool {
+// 	return err.Error() == errRowsNotEquelLength
+// }
 
 // DO NOT EDIT THIS FUNCTION
 func init() {
@@ -111,7 +112,7 @@ func Test_Matrix(t *testing.T) {
 		_, err := New("    1 2 3\n         1 2 3\n  1 2 3    ")
 
 		if err != nil {
-			if RowsNotEquelLength(err) {
+			if reflect.DeepEqual(err, errRowsNotEquelLength) {
 				t.Errorf("error \"Rows has a different lenght\": %s", err.Error())
 			} else {
 				t.Errorf(errMatrixCreate+" %s", err.Error())
