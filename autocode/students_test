@@ -19,9 +19,7 @@ var (
 )
 
 func RowsNotEquelLength(err error) bool {
-
 	return err.Error() == errRowsNotEquelLength
-
 }
 
 // DO NOT EDIT THIS FUNCTION
@@ -77,7 +75,6 @@ func Test_People(t *testing.T) {
 			result := v.Less(0, 1)
 
 			if result != expectedResult {
-
 				t.Errorf("[Test_People: %s] expected: %v, got %v", name, expectedResult, result)
 			}
 
@@ -109,7 +106,7 @@ func Test_Matrix(t *testing.T) {
 
 	assert := assert.New(t)
 
-	t.Run("New matrix (successful)", func(t *testing.T) {
+	t.Run("New", func(t *testing.T) {
 
 		expectedMatrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
 
@@ -124,43 +121,9 @@ func Test_Matrix(t *testing.T) {
 			}
 
 		} else {
-
 			if !assert.Equal(matrix, expectedMatrix, "The two matrix should be the same.") {
 				t.Errorf(errMatrixNotEquel, expectedMatrix, matrix)
 			}
-
-		}
-
-	})
-
-	t.Run("New matrix (different lenght of rows)", func(t *testing.T) {
-
-		_, err := New("    1 2 \n         1 2 3\n  1 2 3    ")
-
-		if err != nil {
-
-			if RowsNotEquelLength(err) {
-				t.Errorf("error \"Rows has a different lenght\": %s", err.Error())
-			} else {
-				t.Errorf(errMatrixCreate+" %s", err.Error())
-			}
-
-		}
-
-	})
-
-	t.Run("New matrix (does not converted strconv.Atoi)", func(t *testing.T) {
-
-		_, err := New("    1 2 3\n         1 2 3\n  1 V 3        ")
-
-		if err != nil {
-
-			if RowsNotEquelLength(err) {
-				t.Errorf("error \"Rows has a different lenght\": %s", err.Error())
-			} else {
-				t.Errorf(errMatrixCreate+" %s", err.Error())
-			}
-
 		}
 
 	})
@@ -191,30 +154,7 @@ func Test_Matrix(t *testing.T) {
 
 	})
 
-	t.Run("Set (successful)", func(t *testing.T) {
-
-		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
-		result := matrix.Set(1, 1, 10)
-
-		expectedMatrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 10, 3, 1, 2, 3}}
-		expectedResult := true
-
-		if result != expectedResult {
-
-			if !result {
-				t.Errorf("disturbed conditions of Set(row, col, value int) method: (row < 0 || m.rows <= row || col < 0 || m.cols <= col)")
-			}
-
-		} else {
-
-			if !assert.Equal(matrix, expectedMatrix, "The two matrix should be the same.") {
-				t.Errorf("The tow matrix are not equel: expected %v, got %v", expectedMatrix, matrix)
-			}
-		}
-
-	})
-
-	t.Run("Set (successful)", func(t *testing.T) {
+	t.Run("Set", func(t *testing.T) {
 
 		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
 		result := matrix.Set(1, 1, 10)
@@ -226,62 +166,9 @@ func Test_Matrix(t *testing.T) {
 		if result != expectedResult {
 			t.Errorf("%s", errSet.Error())
 		} else {
-
 			if !assert.Equal(matrix, expectedMatrix, "The two matrix should be the same.") {
 				t.Errorf("The tow matrix are not equel: expected %v, got %v", expectedMatrix, matrix)
 			}
-		}
-
-	})
-
-	t.Run("Set (unsuccessful: disturbed conditions \"row < 0\")", func(t *testing.T) {
-
-		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
-		result := matrix.Set(-1, 1, 10)
-
-		expectedResult := false
-
-		if result == expectedResult {
-			t.Errorf("%s", errSet.Error())
-		}
-
-	})
-
-	t.Run("Set (unsuccessful: disturbed conditions \"m.rows <= row\")", func(t *testing.T) {
-
-		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
-		result := matrix.Set(3, 1, 10)
-
-		expectedResult := false
-
-		if result == expectedResult {
-			t.Errorf("%s", errSet.Error())
-		}
-
-	})
-
-	t.Run("Set (unsuccessful: disturbed conditions \"col < 0\")", func(t *testing.T) {
-
-		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
-		result := matrix.Set(1, -1, 10)
-
-		expectedResult := false
-
-		if result == expectedResult {
-			t.Errorf("%s", errSet.Error())
-		}
-
-	})
-
-	t.Run("Set (unsuccessful: disturbed conditions \"m.cols <= col\")", func(t *testing.T) {
-
-		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
-		result := matrix.Set(1, 8, 10)
-
-		expectedResult := false
-
-		if result == expectedResult {
-			t.Errorf("%s", errSet.Error())
 		}
 
 	})
