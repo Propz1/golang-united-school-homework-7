@@ -126,6 +126,35 @@ func Test_Matrix(t *testing.T) {
 
 	})
 
+	t.Run("New \"error 1\"", func(t *testing.T) {
+
+		expectedError := errors.New("Rows need to be the same length")
+
+		_, err := New("    1 2 3\n         1 2 3\n  1 2 3 4   ")
+
+		if err != nil {
+			if err.Error() != expectedError.Error() {
+				t.Errorf("Unexpected error: expected %v, got %v", expectedError, err)
+
+			}
+		}
+
+	})
+
+	t.Run("New \"error 2\"", func(t *testing.T) {
+
+		expectedTextError := "strconv.Atoi"
+		expectedError := errors.New("strconv.Atoi: parsing \"b\": invalid syntax")
+
+		_, err := New("    1 2 3\n         1 b 3\n  1 2 3    ")
+
+		if err != nil {
+			if !strings.Contains(err.Error(), expectedTextError) {
+				t.Errorf("Unexpected error: expected \"%v\", got \"%v\"", expectedError, err)
+			}
+		}
+	})
+
 	t.Run("Rows", func(t *testing.T) {
 
 		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
@@ -152,12 +181,25 @@ func Test_Matrix(t *testing.T) {
 
 	})
 
-	t.Run("Set", func(t *testing.T) {
+	t.Run("Set true", func(t *testing.T) {
 
 		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
 		result := matrix.Set(1, 1, 10)
 
 		expectedResult := true
+
+		if result != expectedResult {
+			t.Errorf("%s", errSet.Error())
+		}
+
+	})
+
+	t.Run("Set false", func(t *testing.T) {
+
+		matrix := &Matrix{rows: 3, cols: 3, data: []int{1, 2, 3, 1, 2, 3, 1, 2, 3}}
+		result := matrix.Set(-1, 1, 10)
+
+		expectedResult := false
 
 		if result != expectedResult {
 			t.Errorf("%s", errSet.Error())
